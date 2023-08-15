@@ -106,30 +106,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qjn-Fg-iE6">
-                                <rect key="frame" x="8" y="8" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="fqV-4p-hXn"/>
-                                    <constraint firstAttribute="width" constant="48" id="goo-GN-dwT"/>
-                                </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="backward"/>
-                                <connections>
-                                    <action selector="didTapBackButton:" destination="D8T-jo-fCw" eventType="touchUpInside" id="3C7-bT-uaa"/>
-                                </connections>
-                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BgC-Nd-OG8">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="393" placeholderIntrinsicHeight="852" image="dog" translatesAutoresizingMaskIntoConstraints="NO" id="Kru-07-yBU">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="393" placeholderIntrinsicHeight="852" translatesAutoresizingMaskIntoConstraints="NO" id="AT3-Wj-mhs">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Kru-07-yBU" firstAttribute="leading" secondItem="BgC-Nd-OG8" secondAttribute="leading" id="2rd-3V-TCz"/>
-                                    <constraint firstItem="Kru-07-yBU" firstAttribute="top" secondItem="BgC-Nd-OG8" secondAttribute="top" id="GBi-It-sdW"/>
-                                    <constraint firstAttribute="bottom" secondItem="Kru-07-yBU" secondAttribute="bottom" id="PTI-ab-V3V"/>
-                                    <constraint firstAttribute="trailing" secondItem="Kru-07-yBU" secondAttribute="trailing" id="jUI-Ga-iQe"/>
+                                    <constraint firstItem="AT3-Wj-mhs" firstAttribute="top" secondItem="BgC-Nd-OG8" secondAttribute="top" id="HrB-aS-n6v"/>
+                                    <constraint firstAttribute="bottom" secondItem="AT3-Wj-mhs" secondAttribute="bottom" id="Lk5-FW-idp"/>
+                                    <constraint firstItem="AT3-Wj-mhs" firstAttribute="leading" secondItem="BgC-Nd-OG8" secondAttribute="leading" id="gYY-RI-ZKY"/>
+                                    <constraint firstAttribute="trailing" secondItem="AT3-Wj-mhs" secondAttribute="trailing" id="gag-k1-1MZ"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="sPg-QB-EH3"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="cgM-Wx-zW0"/>
@@ -137,31 +125,43 @@
                                     <outlet property="delegate" destination="D8T-jo-fCw" id="xsw-nS-YiU"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8z-eF-fXr">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8z-eF-fXr" userLabel="sharingButton">
                                 <rect key="frame" x="171.66666666666666" y="785" width="50" height="50"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="sharing"/>
+                                <state key="normal" image="sharingIcon"/>
                                 <connections>
                                     <action selector="didTapShareButton:" destination="D8T-jo-fCw" eventType="touchUpInside" id="J1x-qf-4Az"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qjn-Fg-iE6">
+                                <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="fqV-4p-hXn"/>
+                                    <constraint firstAttribute="width" constant="48" id="goo-GN-dwT"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="backwardIcon"/>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="D8T-jo-fCw" eventType="touchUpInside" id="3C7-bT-uaa"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oPP-k2-Pca"/>
                         <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="trailing" secondItem="oPP-k2-Pca" secondAttribute="trailing" id="1Q2-Kw-hg9"/>
+                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="trailing" secondItem="zBc-FU-5sY" secondAttribute="trailing" id="1Q2-Kw-hg9"/>
                             <constraint firstItem="Qjn-Fg-iE6" firstAttribute="leading" secondItem="oPP-k2-Pca" secondAttribute="leading" constant="8" id="4UP-cU-XQY"/>
                             <constraint firstItem="Qjn-Fg-iE6" firstAttribute="top" secondItem="oPP-k2-Pca" secondAttribute="top" constant="8" id="M08-EA-EPK"/>
-                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="top" secondItem="oPP-k2-Pca" secondAttribute="top" id="VmS-Q3-KNR"/>
+                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="top" secondItem="zBc-FU-5sY" secondAttribute="top" id="VmS-Q3-KNR"/>
                             <constraint firstItem="M8z-eF-fXr" firstAttribute="centerX" secondItem="zBc-FU-5sY" secondAttribute="centerX" id="WRf-QK-99e"/>
-                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="bottom" secondItem="oPP-k2-Pca" secondAttribute="bottom" id="ZH0-Gw-5e6"/>
-                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="leading" secondItem="oPP-k2-Pca" secondAttribute="leading" id="sDs-p9-f4t"/>
+                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="bottom" secondItem="zBc-FU-5sY" secondAttribute="bottom" id="ZH0-Gw-5e6"/>
+                            <constraint firstItem="BgC-Nd-OG8" firstAttribute="leading" secondItem="zBc-FU-5sY" secondAttribute="leading" id="sDs-p9-f4t"/>
                             <constraint firstItem="oPP-k2-Pca" firstAttribute="bottom" secondItem="M8z-eF-fXr" secondAttribute="bottom" constant="17" id="zls-72-3cC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PM6-Vd-mwp"/>
                     <connections>
-                        <outlet property="imageView" destination="Kru-07-yBU" id="3Y2-q7-6yJ"/>
+                        <outlet property="imageView" destination="AT3-Wj-mhs" id="fo4-Xx-mFx"/>
                         <outlet property="scrollView" destination="BgC-Nd-OG8" id="z60-aG-IQs"/>
                     </connections>
                 </viewController>
@@ -234,9 +234,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backward" width="24" height="24"/>
-        <image name="dog" width="375" height="812"/>
-        <image name="sharing" width="50.333332061767578" height="50"/>
+        <image name="backwardIcon" width="24" height="24"/>
+        <image name="sharingIcon" width="50.333332061767578" height="50"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
     </resources>

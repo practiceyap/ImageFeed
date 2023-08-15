@@ -14,10 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
-//        let window = UIWindow(windowScene: windowScene)
-//        window.rootViewController = ProfileViewController()
-//        window.makeKeyAndVisible()
-//        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

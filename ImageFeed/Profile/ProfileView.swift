@@ -13,13 +13,13 @@ final class ProfileView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFill
         return $0
-    }(UIImageView(image: UIImage(named: "photo")))
+    }(UIImageView(image: UIImage(named: "photoMain")))
     
     let profileName: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Екатерина Новикова"
         $0.font = UIFont.boldSystemFont(ofSize: 23)
-        $0.textColor = .white
+        $0.textColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         $0.numberOfLines = 1
         return $0
     }(UILabel(frame: .zero))
@@ -36,13 +36,13 @@ final class ProfileView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Hello, world!"
         $0.font = .preferredFont(forTextStyle: .footnote)
-        $0.textColor = .white
+        $0.textColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         return $0
     }(UILabel(frame: .zero))
     
     let logOutButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setImage(UIImage(named: "exit"), for: .normal)
+        $0.setImage(UIImage(named: "exitIcon"), for: .normal)
       return $0
     }(UIButton(frame: .zero))
     
@@ -81,12 +81,9 @@ extension ProfileView {
             profileLogin.leadingAnchor.constraint(equalTo: profileName.leadingAnchor),
             profileLogin.trailingAnchor.constraint(equalTo: profileName.trailingAnchor),
             
-            // Для profileLogin скорей всего тоже нужен trailing т.к отступ должен быть справа тоже на 16.
-            
             profileDescription.topAnchor.constraint(equalTo: profileLogin.bottomAnchor, constant: 8),
             profileDescription.leadingAnchor.constraint(equalTo: profileName.leadingAnchor),
-            profileDescription.trailingAnchor.constraint(equalTo: profileLogin.trailingAnchor),
-            // Для profileDescription скорей всего тоже нужен trailing т.к отступ должен быть справа тоже на 16.
+            profileDescription.trailingAnchor.constraint(equalTo: profileLogin.trailingAnchor),        
             
             logOutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             logOutButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor)
