@@ -13,7 +13,7 @@ final class ProfileView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFill
         return $0
-    }(UIImageView(image: UIImage(named: "photoMain")))
+    }(UIImageView(image: UIImage(named: "user")))
     
     let profileName: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +42,7 @@ final class ProfileView: UIView {
     
     let logOutButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setImage(UIImage(named: "exitIcon"), for: .normal)
+        $0.setImage(UIImage(named: "ipad.and.arrow.forward"), for: .normal)
       return $0
     }(UIButton(frame: .zero))
     
