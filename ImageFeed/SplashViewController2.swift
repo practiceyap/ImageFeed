@@ -1,13 +1,13 @@
 //
-//  SplashViewController.swift
+//  SplashViewController2.swift
 //  ImageFeed
 //
-//  Created by Muller Alexander on 19.08.2023.
+//  Created by Muller Alexander on 27.08.2023.
 //
 
 import UIKit
 
-private class SplashViewController: UIViewController {
+final class SplashViewController2: UIViewController {
     private let oAuth2TokenStorage = OAuth2TokenStorage()
     private let showAuthViewSegueIdentifier = "ShowAuthView"
     private let oAuth2Service = OAuth2Service.shared
@@ -41,7 +41,7 @@ private class SplashViewController: UIViewController {
     }
 }
 
-extension SplashViewController: AuthViewControllerDelegate {
+extension SplashViewController2: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
@@ -54,7 +54,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard
                 let navigationController = segue.destination as? UINavigationController,
                 let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(showAuthViewSegueIdentifier)") }
+            else { return }
             viewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)

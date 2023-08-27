@@ -9,13 +9,13 @@ import UIKit
 
 final class ProfileView: UIView {
     
-    let profileImageView: UIImageView = {
+    private let profileImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFill
         return $0
     }(UIImageView(image: UIImage(named: "user")))
     
-    let profileName: UILabel = {
+    private let profileName: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Екатерина Новикова"
         $0.font = UIFont.boldSystemFont(ofSize: 23)
@@ -24,7 +24,7 @@ final class ProfileView: UIView {
         return $0
     }(UILabel(frame: .zero))
     
-    let profileLogin: UILabel = {
+    private let profileLogin: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "@ekaterina_nov"
         $0.font = .preferredFont(forTextStyle: .footnote)
@@ -32,7 +32,7 @@ final class ProfileView: UIView {
         return $0
     }(UILabel(frame: .zero))
     
-    let profileDescription: UILabel = {
+    private let profileDescription: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Hello, world!"
         $0.font = .preferredFont(forTextStyle: .footnote)
@@ -40,7 +40,7 @@ final class ProfileView: UIView {
         return $0
     }(UILabel(frame: .zero))
     
-    let logOutButton: UIButton = {
+    private let logOutButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "ipad.and.arrow.forward"), for: .normal)
       return $0
