@@ -12,10 +12,12 @@ final class ProfileView: UIView {
     let profileImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = $0.frame.size.width / 2
+        $0.clipsToBounds = true
         return $0
     }(UIImageView(image: UIImage(named: "user")))
     
-    let profileName: UILabel = {
+    var profileName: UILabel? = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Екатерина Новикова"
         $0.font = UIFont.boldSystemFont(ofSize: 23)
@@ -24,7 +26,7 @@ final class ProfileView: UIView {
         return $0
     }(UILabel(frame: .zero))
     
-    let profileLogin: UILabel = {
+    var profileLogin: UILabel? = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "@ekaterina_nov"
         $0.font = .preferredFont(forTextStyle: .footnote)
@@ -32,7 +34,7 @@ final class ProfileView: UIView {
         return $0
     }(UILabel(frame: .zero))
     
-    let profileDescription: UILabel = {
+    var profileDescription: UILabel? = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Hello, world!"
         $0.font = .preferredFont(forTextStyle: .footnote)
@@ -40,11 +42,15 @@ final class ProfileView: UIView {
         return $0
     }(UILabel(frame: .zero))
     
-    let logOutButton: UIButton = {
+    private let logOutButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setImage(UIImage(named: "ipad.and.arrow.forward"), for: .normal)
+        $0.tintColor = UIColor.ypRed
       return $0
-    }(UIButton(frame: .zero))
+    }(UIButton.systemButton(
+        with: UIImage(named: "ipad.and.arrow.forward")!,
+        target: self,
+        action: #selector(didTapLogoutButton)
+    ))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,14 +61,27 @@ final class ProfileView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc
+    private func didTapLogoutButton() {
+        profileImageView.image = UIImage(named: "stub.png")
+        profileName?.removeFromSuperview()
+        profileName = nil
+        profileLogin?.removeFromSuperview()
+        profileLogin = nil
+        profileDescription?.removeFromSuperview()
+        profileDescription = nil
+        
+        logOutButton.isEnabled = false
+    }
 }
 
 extension ProfileView {
     private func setupContraints() {
         addSubview(profileImageView)
-        addSubview(profileName)
-        addSubview(profileLogin)
-        addSubview(profileDescription)
+        addSubview(profileName!)
+        addSubview(profileLogin!)
+        addSubview(profileDescription!)
         addSubview(logOutButton)
         
         // Провести проверку по корректности лейблов (profileLogin, profileDescription) - trailing нужен ли для них или нет.
@@ -72,18 +91,18 @@ extension ProfileView {
             profileImageView.heightAnchor.constraint(equalToConstant: 70),
             profileImageView.widthAnchor.constraint(equalToConstant: 70),
             
-            profileName.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
-            profileName.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor),
+            profileName!.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
+            profileName!.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor),
              // Чтобы был отступ справа если будет к примеру такое имя: Константин Константинопольский
-            profileName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            profileName!.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            profileLogin.topAnchor.constraint(equalTo: profileName.bottomAnchor, constant: 8),
-            profileLogin.leadingAnchor.constraint(equalTo: profileName.leadingAnchor),
-            profileLogin.trailingAnchor.constraint(equalTo: profileName.trailingAnchor),
+            profileLogin!.topAnchor.constraint(equalTo: profileName!.bottomAnchor, constant: 8),
+            profileLogin!.leadingAnchor.constraint(equalTo: profileName!.leadingAnchor),
+            profileLogin!.trailingAnchor.constraint(equalTo: profileName!.trailingAnchor),
             
-            profileDescription.topAnchor.constraint(equalTo: profileLogin.bottomAnchor, constant: 8),
-            profileDescription.leadingAnchor.constraint(equalTo: profileName.leadingAnchor),
-            profileDescription.trailingAnchor.constraint(equalTo: profileLogin.trailingAnchor),        
+            profileDescription!.topAnchor.constraint(equalTo: profileLogin!.bottomAnchor, constant: 8),
+            profileDescription!.leadingAnchor.constraint(equalTo: profileName!.leadingAnchor),
+            profileDescription!.trailingAnchor.constraint(equalTo: profileLogin!.trailingAnchor),
             
             logOutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             logOutButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor)

@@ -21,9 +21,11 @@ final class WebViewViewController: UIViewController {
     weak var delegate: WebViewViewControllerDelegate?
     
     private let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
+    private var estimatedProgressObservation: NSKeyValueObservation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        includeEstimatedProgressObservation()
         addURLComponents()
         updateProgress()
         webView.navigationDelegate = self
@@ -41,7 +43,7 @@ final class WebViewViewController: UIViewController {
         updateProgress()
         setupProgress()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
@@ -65,6 +67,16 @@ final class WebViewViewController: UIViewController {
     
     @IBAction func didTapBackButton(_ sender: Any?) {
         delegate?.webViewViewControllerDidCancel(self)
+    }
+    
+    private func includeEstimatedProgressObservation() {
+        estimatedProgressObservation = webView.observe(
+            \.estimatedProgress,
+             options: [],
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 self.updateProgress()
+             })
     }
 }
 
@@ -96,7 +108,7 @@ extension WebViewViewController: WKNavigationDelegate {
         progressView.progressTintColor = .ypBlack
         progressView.trackTintColor = .ypGray
         progressView.progressViewStyle = .bar
-      }
+    }
     
     override func observeValue(forKeyPath keyPath: String?,
                                of object: Any?,
