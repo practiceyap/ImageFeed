@@ -19,6 +19,11 @@
 		0151873D2AA5F6EB009A581F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0151873C2AA5F6EB009A581F /* Kingfisher */; };
 		015A5D812A726B3600A15FA6 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015A5D802A726B3600A15FA6 /* SingleImageViewController.swift */; };
 		0173DCE02AB32CC500270AEF /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0173DCDF2AB32CC500270AEF /* Photo.swift */; };
+		0173DCEF2AB49CE300270AEF /* ImagesListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0173DCEE2AB49CE300270AEF /* ImagesListCellDelegate.swift */; };
+		0173DCF12AB4A12B00270AEF /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0173DCF02AB4A12B00270AEF /* PhotoResult.swift */; };
+		017778172AB9C47A00113328 /* UrlsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017778162AB9C47A00113328 /* UrlsResult.swift */; };
+		017778192AB9C52000113328 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017778182AB9C52000113328 /* Date+Extensions.swift */; };
+		0177781B2AB9C7E200113328 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0177781A2AB9C7E200113328 /* String+Extensions.swift */; };
 		0187DA432A8B7D2600E221D6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0187DA422A8B7D2600E221D6 /* Constants.swift */; };
 		0187DA462A8C926A00E221D6 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0187DA452A8C926A00E221D6 /* AuthViewController.swift */; };
 		0187DA482A8C927C00E221D6 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0187DA472A8C927C00E221D6 /* AuthView.swift */; };
@@ -58,6 +63,11 @@
 		01486D152A5FD1B70046A99D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		015A5D802A726B3600A15FA6 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		0173DCDF2AB32CC500270AEF /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		0173DCEE2AB49CE300270AEF /* ImagesListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellDelegate.swift; sourceTree = "<group>"; };
+		0173DCF02AB4A12B00270AEF /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
+		017778162AB9C47A00113328 /* UrlsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlsResult.swift; sourceTree = "<group>"; };
+		017778182AB9C52000113328 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		0177781A2AB9C7E200113328 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		0187DA422A8B7D2600E221D6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0187DA452A8C926A00E221D6 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		0187DA472A8C927C00E221D6 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
@@ -163,6 +173,8 @@
 				0187DA4C2A8E4A3900E221D6 /* UIColor+Extensions.swift */,
 				0187DA4E2A8E4A5B00E221D6 /* URLRequest+Extensions.swift */,
 				0187DA552A8E548400E221D6 /* URLSession+Extensions.swift */,
+				017778182AB9C52000113328 /* Date+Extensions.swift */,
+				0177781A2AB9C7E200113328 /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -188,6 +200,8 @@
 				0193BADA2A9F13AA00BBEFDB /* AlertModel.swift */,
 				0193BAF62AA06CF900BBEFDB /* UserResult.swift */,
 				0173DCDF2AB32CC500270AEF /* Photo.swift */,
+				0173DCF02AB4A12B00270AEF /* PhotoResult.swift */,
+				017778162AB9C47A00113328 /* UrlsResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -205,6 +219,7 @@
 			children = (
 				01486D0B2A5FD1B60046A99D /* ImagesListViewController.swift */,
 				01DFCEDB2A64FFFF00828648 /* ImagesListCell.swift */,
+				0173DCEE2AB49CE300270AEF /* ImagesListCellDelegate.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -314,16 +329,21 @@
 				0193BAD32A9F0DA100BBEFDB /* ProfileService.swift in Sources */,
 				0193BAD12A9DC30000BBEFDB /* UIBlockingProgressHUD.swift in Sources */,
 				01E486602A67DC4500172FB6 /* ProfileViewController.swift in Sources */,
+				0177781B2AB9C7E200113328 /* String+Extensions.swift in Sources */,
+				017778172AB9C47A00113328 /* UrlsResult.swift in Sources */,
 				0187DA562A8E548400E221D6 /* URLSession+Extensions.swift in Sources */,
 				0193BADD2A9F140500BBEFDB /* AlertPresenter.swift in Sources */,
 				0144487E2AB0A653004596D2 /* ImagesListService.swift in Sources */,
 				0193BAD52A9F0EB300BBEFDB /* ProfileResult.swift in Sources */,
 				01E4865D2A67B62700172FB6 /* ProfileView.swift in Sources */,
 				0187DA4D2A8E4A3900E221D6 /* UIColor+Extensions.swift in Sources */,
+				0173DCF12AB4A12B00270AEF /* PhotoResult.swift in Sources */,
 				0187DA482A8C927C00E221D6 /* AuthView.swift in Sources */,
 				01486D0A2A5FD1B60046A99D /* SceneDelegate.swift in Sources */,
+				017778192AB9C52000113328 /* Date+Extensions.swift in Sources */,
 				0187DA542A8E4F4200E221D6 /* OAuth2TokenStorage.swift in Sources */,
 				0173DCE02AB32CC500270AEF /* Photo.swift in Sources */,
+				0173DCEF2AB49CE300270AEF /* ImagesListCellDelegate.swift in Sources */,
 				0193BAD72A9F0EDF00BBEFDB /* Profile.swift in Sources */,
 				0187DA462A8C926A00E221D6 /* AuthViewController.swift in Sources */,
 				0136527F2AAB3D1900784DF2 /* TabBarController.swift in Sources */,

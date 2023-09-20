@@ -56,13 +56,13 @@ final class SplashViewController: UIViewController {
     }
     
     private func showAlertNetworkError() {
-        let model = AlertModel(
+        let model = AlertModelOneButton(
             title: "Что-то пошло не так(",
             message: "Не удалось войти в систему",
             buttonText: "Оk",
             completion: nil
         )
-        alertPresenter?.show(model)
+        alertPresenter?.showSplashView(model)
     }
     
     private func creatSplashScreenImageView() {

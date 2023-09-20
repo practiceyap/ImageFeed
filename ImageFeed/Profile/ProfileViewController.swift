@@ -10,6 +10,10 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private let imagesListService = ImagesListService.shared
+    private var alertPresenter: AlertPresenterProtocol?
+    
     let profileView = ProfileView(frame: .zero)
     private var profileImageServiceObserver: NSObjectProtocol?
     
@@ -44,6 +48,11 @@ final class ProfileViewController: UIViewController {
         updateAvatar()
     }
     
+    @objc
+    private func didTapLogoutButton() {
+        showAlertExitProfile()
+    }
+    
     private func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
@@ -54,5 +63,37 @@ final class ProfileViewController: UIViewController {
         profileView.profileImageView.kf.setImage(with: imageURL,
                                     placeholder: UIImage(named: "placeholder.jpeg"),
                                     options: [.processor(processor)])
+    }
+    
+    private func exitProfile() {
+        OAuth2TokenStorage().token = nil
+        WebViewViewController.clean()
+        cleanService()
+        
+        guard let window = UIApplication.shared.windows.first else {
+            return assertionFailure("Invalid Configuration")
+        }
+        window.rootViewController = SplashViewController()
+    }
+    
+    private func showAlertExitProfile() {
+        let model = AlertModelTwoButton(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            buttonTextOne: "Да",
+            buttonTextTwo: "Нет",
+            completionOne: { [weak self] in
+                guard let self = self else { return }
+                exitProfile()
+            },
+            completionTwo: nil
+        )
+        alertPresenter?.showTwoButton(model)
+    }
+    
+    private func cleanService() {
+        profileService.cleanProfile()
+        profileImageService.cleanProfileImageURL()
+        imagesListService.cleanImagesList()
     }
 }

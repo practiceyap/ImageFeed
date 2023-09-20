@@ -53,6 +53,10 @@ final class ProfileImageService {
         task.resume()
     }
     
+    func cleanProfileImageURL() {
+        avatarURL = nil
+        task = nil
+    }
 }
 
 extension ProfileImageService {
