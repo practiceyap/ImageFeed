@@ -11,7 +11,6 @@ final class ProfileService {
     
     static let shared = ProfileService()
     private let urlSession = URLSession.shared
-    
     private(set) var profile: Profile?
     private var task: URLSessionTask?
     
@@ -57,7 +56,7 @@ final class ProfileService {
     }
 }
 
-extension ProfileService {
+private extension ProfileService {
     var selfProfileRequest: URLRequest {
         URLRequest.makeHTTPRequest(path: "/me", httpMethod: "GET")
     }

@@ -8,11 +8,10 @@
 import UIKit
 
 final class SingleImageViewController: UIViewController {
-    var image: UIImage? {
+    private var image: UIImage! {
         didSet {
             guard isViewLoaded else { return }
             imageView.image = image
-            guard let image else { return }
             rescaleAndCenterImageInScrollView(image: image)
         }
     }
@@ -24,13 +23,8 @@ final class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
-        
         scrollView.minimumZoomScale = 0.1
-        // Для мок картинок мало 1.25
-        scrollView.maximumZoomScale = 8.25
-        guard let image else { return }
-        rescaleAndCenterImageInScrollView(image: image)
+        scrollView.maximumZoomScale = 1.25
         downloadImage()
         alertPresenter = AlertPresenter(viewController: self)
     }
@@ -71,9 +65,7 @@ extension SingleImageViewController: UIScrollViewDelegate {
         UIBlockingProgressHUD.show()
         imageView.kf.setImage(with: largeImageURL) { [weak self] result in
             UIBlockingProgressHUD.dismiss()
-            
             guard let self = self else { return }
-            
             switch result {
             case .success(let imageResult):
                 self.rescaleAndCenterImageInScrollView(image: imageResult.image)

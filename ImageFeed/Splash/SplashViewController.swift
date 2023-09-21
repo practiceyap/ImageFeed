@@ -10,15 +10,19 @@ import UIKit
 
 final class SplashViewController: UIViewController {
     private let oAuth2TokenStorage = OAuth2TokenStorage()
-    private let showAuthViewSegueIdentifier = "ShowAuthView"
-    private let oAuth2Service = OAuth2Service.shared
+    private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
+    private let oAuth2Service = OAuth2Service()
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
-    private var splashScreenImageView: UIImageView!
     private var alertPresenter: AlertPresenterProtocol?
     private var authViewController: AuthViewController?
     
+    private let splashScreenImageView: UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+
+        return $0
+    }(UIImageView(image: UIImage(named: "splash_screen_logo")))
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -31,16 +35,11 @@ final class SplashViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setNeedsStatusBarAppearanceUpdate()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .ypBlack
-        creatSplashScreenImageView()
+        setupConstraints()
     }
     
     private func switchToTabBarController() {
@@ -65,17 +64,15 @@ final class SplashViewController: UIViewController {
         alertPresenter?.showSplashView(model)
     }
     
-    private func creatSplashScreenImageView() {
-        let splashScreen = UIImageView(image: UIImage(named: "splash_screen_logo"))
-        splashScreen.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(splashScreen)
+    private func setupConstraints() {
+        view.addSubview(splashScreenImageView)
+        
         NSLayoutConstraint.activate([
-            splashScreen.heightAnchor.constraint(equalToConstant: 75),
-            splashScreen.widthAnchor.constraint(equalToConstant: 75),
-            splashScreen.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            splashScreen.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            splashScreenImageView.heightAnchor.constraint(equalToConstant: 75),
+            splashScreenImageView.widthAnchor.constraint(equalToConstant: 72),
+            splashScreenImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            splashScreenImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        self.splashScreenImageView = splashScreen
     }
 }
 
@@ -88,8 +85,17 @@ extension SplashViewController: AuthViewControllerDelegate {
         }
     }
     
+    private func switchToAuthViewController() {
+        let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(identifier: "AuthViewController") as? AuthViewController
+        authViewController?.delegate = self
+        guard let authViewController = authViewController else { return }
+        authViewController.modalPresentationStyle = .fullScreen
+        present(authViewController, animated: true)
+    }
+    
     private func fetchOAuthToken(_ code: String) {
-        oAuth2Service.fetchOAuthToken(code) { [weak self] result in
+        oAuth2Service.fetchAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let token):
@@ -117,26 +123,5 @@ extension SplashViewController: AuthViewControllerDelegate {
                 break
             }
         }
-    }
-    
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        if segue.identifier == showAuthViewSegueIdentifier {
-    //            guard
-    //                let navigationController = segue.destination as? UINavigationController,
-    //                let viewController = navigationController.viewControllers[0] as? AuthViewController
-    //            else { return }
-    //            viewController.delegate = self
-    //        } else {
-    //            super.prepare(for: segue, sender: sender)
-    //        }
-    //    }
-    
-    private func switchToAuthViewController() {
-        let authViewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(identifier: "AuthViewController") as? AuthViewController
-        authViewController?.delegate = self
-        guard let authViewController = authViewController else { return }
-        authViewController.modalPresentationStyle = .fullScreen
-        present(authViewController, animated: true)
     }
 }

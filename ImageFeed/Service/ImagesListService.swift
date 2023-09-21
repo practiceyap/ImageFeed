@@ -8,17 +8,15 @@
 import UIKit
 
 final class ImagesListService {
-    
-    private (set) var photos: [Photo] = []
-    
-    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
-    
+    private var likeTask: URLSessionTask?
     static let shared = ImagesListService()
     private let urlSession = URLSession.shared
     private let token = OAuth2TokenStorage().token
-    
+    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+
     func fetchPhotosNextPage() {
         let nextPage = nextPageNumber()
         
@@ -36,8 +34,8 @@ final class ImagesListService {
                 guard let self = self else { return }
                 switch result {
                 case .success(let photoResults):
-                    for photoResult in photoResults {
-                        self.photos.append(self.convert(photoResult))
+                        for photoResult in photoResults {
+                            self.photos.append(self.convert(photoResult))
                     }
                     self.lastLoadedPage = nextPage
                     NotificationCenter.default
@@ -49,14 +47,13 @@ final class ImagesListService {
                     
                     self.task = nil
                 case .failure(let error):
-                    assertionFailure("Warning loading photo \(error)")
+                    assertionFailure("WARNING loading photo \(error)")
                 }
             }
         }
         self.task = task
         task.resume()
     }
-
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
         
@@ -99,6 +96,7 @@ final class ImagesListService {
         task.resume()
     }
     
+    
     func cleanImagesList() {
         photos = []
         lastLoadedPage = nil
@@ -106,8 +104,15 @@ final class ImagesListService {
     }
 }
 
-
 private extension ImagesListService {
+    func photosRequest(page: Int, perPage: Int) -> URLRequest {
+        URLRequest.makeHTTPRequest(
+            path: "/photos?"
+            + "page=\(page)"
+            + "&&per_page=\(perPage)",
+            httpMethod: "GET"
+        )
+    }
     
     func likeRequest(photoId: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
@@ -120,15 +125,6 @@ private extension ImagesListService {
         URLRequest.makeHTTPRequest(
             path: "/photos/\(photoId)/like",
             httpMethod: "DELETE"
-        )
-    }
-    
-    func photosRequest(page: Int, perPage: Int) -> URLRequest {
-        URLRequest.makeHTTPRequest(
-            path: "/photos?"
-            + "page=\(page)"
-            + "&&per_page=\(perPage)",
-            httpMethod: "GET"
         )
     }
     

@@ -7,20 +7,22 @@
 
 import UIKit
 
-final class ImagesListCell: UITableViewCell {
+public final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
+    weak var delegate: ImagesListCellDelegate?
+    private let imagesListService = ImagesListService.shared
     @IBOutlet var myCustomImageView: UIImageView!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var likeButton: UIButton!
-    
     @IBOutlet weak var linearGradient: UIView!
-    weak var delegate: ImagesListCellDelegate?
-    private let imagesListService = ImagesListService.shared
+   
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
         myCustomImageView.kf.cancelDownloadTask()
     }
+
+    
     @IBAction func likeButtonClicked(_ sender: Any) {
         delegate?.imageListCellDidTapLike(self)
     }
@@ -51,8 +53,8 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(isLiked: Bool) {
-        let likeImage = UIImage(named: isLiked ? "like_button_on" : "like_button_off")
-        likeButton.setImage(likeImage, for: .normal)
+        let like = UIImage(named: isLiked ? "like_button_on" : "like_button_off")
+        likeButton.setImage(like, for: .normal)
     }
     
     private func gradientLayer(_ view: UIView) {

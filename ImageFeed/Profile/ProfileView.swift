@@ -9,6 +9,8 @@ import UIKit
 
 final class ProfileView: UIView {
     
+    var didTapLogoutButton: (() -> Void)?
+    
     let profileImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFill
@@ -45,12 +47,11 @@ final class ProfileView: UIView {
     private let logOutButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.tintColor = UIColor.ypRed
+        let image = UIImage(named: "ipad.and.arrow.forward")
+        $0.setImage(image, for: .normal)
+        $0.addTarget(self, action: #selector(handleLogoutButton), for: .touchUpInside)
       return $0
-    }(UIButton.systemButton(
-        with: UIImage(named: "ipad.and.arrow.forward")!,
-        target: self,
-        action: #selector(didTapLogoutButton)
-    ))
+    }(UIButton(type: .custom))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,16 +64,8 @@ final class ProfileView: UIView {
     }
     
     @objc
-    private func didTapLogoutButton() {
-        profileImageView.image = UIImage(named: "stub.png")
-        profileName?.removeFromSuperview()
-        profileName = nil
-        profileLogin?.removeFromSuperview()
-        profileLogin = nil
-        profileDescription?.removeFromSuperview()
-        profileDescription = nil
-        
-        logOutButton.isEnabled = false
+    private func handleLogoutButton() {
+        didTapLogoutButton?()
     }
 }
 

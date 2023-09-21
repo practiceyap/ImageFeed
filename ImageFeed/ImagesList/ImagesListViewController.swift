@@ -10,11 +10,9 @@ import UIKit
 final class ImagesListViewController: UIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private var photos: [Photo] = []
-    
     private var imagesListService = ImagesListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
     private var alertPresenter: AlertPresenterProtocol?
-    
     @IBOutlet private var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -37,6 +35,7 @@ final class ImagesListViewController: UIViewController {
                   let indexPath = sender as? IndexPath else {
                 return
             }
+            
             let image = URL(string: photos[indexPath.row].largeImageURL)
             viewController.largeImageURL = image
         } else {
@@ -58,6 +57,7 @@ final class ImagesListViewController: UIViewController {
             }
         updateTableViewAnimated()
     }
+
     
     private func updateTableViewAnimated() {
         let oldCount = photos.count
@@ -92,29 +92,29 @@ extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         
-        guard let imageListCell = cell as? ImagesListCell else {
+        guard let imagesListCell = cell as? ImagesListCell else {
+            print("Warning: Ошибка приведения типов, имеются пустые ячейки")
             return UITableViewCell()
         }
         
-        imageListCell.delegate = self
+        imagesListCell.delegate = self
         
         let photo = photos[indexPath.row]
-        let configuringCellStatus = imageListCell.configCell(photoURL: photo.thumbImageURL, with: indexPath)
-        imageListCell.setIsLiked(isLiked: photo.isLiked)
+        let configuringCellStatus = imagesListCell.configCell(photoURL: photo.thumbImageURL, with: indexPath)
+        imagesListCell.setIsLiked(isLiked: photo.isLiked)
         if configuringCellStatus {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-        return imageListCell
+        return imagesListCell
     }
-    
+}
+
+extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == imagesListService.photos.count {
             imagesListService.fetchPhotosNextPage()
         }
     }
-}
-
-extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
