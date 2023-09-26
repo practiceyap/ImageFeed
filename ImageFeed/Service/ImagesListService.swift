@@ -1,10 +1,3 @@
-//
-//  ImagesListService.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 12.09.2023.
-//
-
 import Foundation
 
 final class ImagesListService {

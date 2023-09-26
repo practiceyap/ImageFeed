@@ -1,12 +1,4 @@
-//
-//  SplashViewController5.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 27.08.2023.
-//
-
 import UIKit
-//import ProgressHUD
 
 final class SplashViewController: UIViewController {
     private let oAuth2TokenStorage = OAuth2TokenStorage()

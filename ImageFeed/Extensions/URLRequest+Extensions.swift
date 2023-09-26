@@ -1,10 +1,3 @@
-//
-//  URLRequest+Extensions.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 17.08.2023.
-//
-
 import UIKit
 
 extension URLRequest {

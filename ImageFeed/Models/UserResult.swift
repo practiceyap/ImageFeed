@@ -1,10 +1,3 @@
-//
-//  UserResult.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 31.08.2023.
-//
-
 import UIKit
 
 public struct UserResult: Codable {

@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 13.07.2023.
-//
-
 import UIKit
 
 final class ImagesListViewController: UIViewController {
@@ -123,7 +116,7 @@ extension ImagesListViewController: ImagesListViewControllerProtocol {
         let model = AlertModelOneButton(
             title: "Что-то пошло не так.",
             message: "Попробуйте ещё раз.",
-            buttonText: "ОК",
+            buttonText: "Оk",
             completion: nil
         )
         alertPresenter?.showOneButton(model)

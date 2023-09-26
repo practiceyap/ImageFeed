@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 13.07.2023.
-//
-
 import UIKit
 import ProgressHUD
 

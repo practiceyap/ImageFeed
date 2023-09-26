@@ -1,10 +1,3 @@
-//
-//  Photo.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 14.09.2023.
-//
-
 import UIKit
 
 public struct Photo {

@@ -1,10 +1,3 @@
-//
-//  ProfilePresenter.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 26.09.2023.
-//
-
 import UIKit
 
 final class ProfilePresenter {
