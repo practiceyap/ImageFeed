@@ -5,10 +5,9 @@
 //  Created by Muller Alexander on 30.08.2023.
 //
 
-import UIKit
+import Foundation
 
 final class ProfileService {
-    
     static let shared = ProfileService()
     private let urlSession = URLSession.shared
     private(set) var profile: Profile?

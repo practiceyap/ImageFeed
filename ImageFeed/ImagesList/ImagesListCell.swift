@@ -11,10 +11,11 @@ public final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     weak var delegate: ImagesListCellDelegate?
     private let imagesListService = ImagesListService.shared
-    @IBOutlet var myCustomImageView: UIImageView!
-    @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var likeButton: UIButton!
-    @IBOutlet weak var linearGradient: UIView!
+    
+    @IBOutlet private var myCustomImageView: UIImageView!
+    @IBOutlet private var dateLabel: UILabel!
+    @IBOutlet private var likeButton: UIButton!
+    @IBOutlet private weak var linearGradient: UIView!
    
     
     public override func prepareForReuse() {
@@ -22,8 +23,7 @@ public final class ImagesListCell: UITableViewCell {
         myCustomImageView.kf.cancelDownloadTask()
     }
 
-    
-    @IBAction func likeButtonClicked(_ sender: Any) {
+    @IBAction private func likeButtonClicked(_ sender: Any) {
         delegate?.imageListCellDidTapLike(self)
     }
     
@@ -53,8 +53,7 @@ public final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(isLiked: Bool) {
-        let like = UIImage(named: isLiked ? "like_button_on" : "like_button_off")
-        likeButton.setImage(like, for: .normal)
+        likeButton.setImage(UIImage(named: isLiked ? "like_button_on" : "like_button_off"), for: .normal)
     }
     
     private func gradientLayer(_ view: UIView) {
@@ -64,10 +63,8 @@ public final class ImagesListCell: UITableViewCell {
         let gradientColors: [CGColor] = [startColor.cgColor, endColor.cgColor]
         gradientLayer.frame = view.bounds
         gradientLayer.colors = gradientColors
-        
         view.backgroundColor = UIColor.clear
         view.layer.insertSublayer(gradientLayer, at: 0)
-        
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 }

@@ -2,10 +2,10 @@
 //  WebViewViewControllerDelegate.swift
 //  ImageFeed
 //
-//  Created by Muller Alexander on 21.09.2023.
+//  Created by Muller Alexander on 26.09.2023.
 //
 
-import UIKit
+import Foundation
 
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)

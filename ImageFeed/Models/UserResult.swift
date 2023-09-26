@@ -7,11 +7,11 @@
 
 import UIKit
 
-struct UserResult: Codable {
+public struct UserResult: Codable {
     let profileImage: ProfileImage?
 }
 
-struct ProfileImage: Codable {
+public struct ProfileImage: Codable {
     let small: String?
     let medium: String?
     let large: String?

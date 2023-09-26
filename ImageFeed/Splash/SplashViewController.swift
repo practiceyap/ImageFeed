@@ -43,36 +43,22 @@ final class SplashViewController: UIViewController {
     }
     
     private func switchToTabBarController() {
-        // Получаем экземпляр `Window` приложения
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         
-        // Cоздаём экземпляр нужного контроллера из Storyboard с помощью ранее заданного идентификатора.
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
         
-        // Установим в `rootViewController` полученный контроллер
         window.rootViewController = tabBarController
     }
     
     private func showAlertNetworkError() {
         let model = AlertModelOneButton(
-            title: "Что-то пошло не так(",
+            title: "Что-то пошло не так",
             message: "Не удалось войти в систему",
             buttonText: "Оk",
             completion: nil
         )
         alertPresenter?.showSplashView(model)
-    }
-    
-    private func setupConstraints() {
-        view.addSubview(splashScreenImageView)
-        
-        NSLayoutConstraint.activate([
-            splashScreenImageView.heightAnchor.constraint(equalToConstant: 75),
-            splashScreenImageView.widthAnchor.constraint(equalToConstant: 72),
-            splashScreenImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            splashScreenImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
     }
 }
 
@@ -123,5 +109,18 @@ extension SplashViewController: AuthViewControllerDelegate {
                 break
             }
         }
+    }
+}
+
+extension SplashViewController {
+    private func setupConstraints() {
+        view.addSubview(splashScreenImageView)
+        
+        NSLayoutConstraint.activate([
+            splashScreenImageView.heightAnchor.constraint(equalToConstant: 75),
+            splashScreenImageView.widthAnchor.constraint(equalToConstant: 72),
+            splashScreenImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            splashScreenImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }

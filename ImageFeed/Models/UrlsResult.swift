@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct UrlsResult: Codable {
+public struct UrlsResult: Codable {
     let full: String
     let thumb: String
 }

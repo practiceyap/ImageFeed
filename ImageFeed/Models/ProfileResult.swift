@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ProfileResult: Codable {
+public struct ProfileResult: Codable {
     let username: String
     let firstName: String
     let lastName: String?

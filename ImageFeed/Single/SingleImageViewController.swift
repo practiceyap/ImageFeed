@@ -8,8 +8,11 @@
 import UIKit
 
 final class SingleImageViewController: UIViewController {
+    
+    var largeImageURL: URL?
+    private var alertPresenter: AlertPresenterProtocol?
     private var image: UIImage! {
-        didSet {
+        didSet{
             guard isViewLoaded else { return }
             imageView.image = image
             rescaleAndCenterImageInScrollView(image: image)
@@ -18,9 +21,7 @@ final class SingleImageViewController: UIViewController {
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var scrollView: UIScrollView!
-    private var alertPresenter: AlertPresenterProtocol?
-    var largeImageURL: URL?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 0.1

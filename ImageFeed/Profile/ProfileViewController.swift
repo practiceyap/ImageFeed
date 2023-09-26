@@ -9,61 +9,29 @@ import UIKit
 import Kingfisher
 
 final class ProfileViewController: UIViewController {
-  
+
     private let profileView = ProfileView(frame: .zero)
     private var profileImageServiceObserver: NSObjectProtocol?
     private var alertPresenter: AlertPresenterProtocol?
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
-    private let imagesListService = ImagesListService.shared
-    
+    private var presenter: ProfilePresenterProtocol?
+
     override func loadView() {
         view = profileView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypBlack
-        updateProfileDetails(profile: profileService.profile)
-        alertPresenter = AlertPresenter(viewController: self)
-        
+
         profileView.didTapLogoutButton = { [weak self] in
             self?.showAlertExitProfile()
         }
+
+        alertPresenter = AlertPresenter(viewController: self)
+        presenter?.viewDidLoad()
     }
-    
-    func updateProfileDetails(profile: Profile?) {
-        guard let profile = profile else {
-            return
-        }
-        profileView.profileName?.text = profile.name
-        profileView.profileLogin?.text = profile.loginName
-        profileView.profileDescription?.text = profile.bio
-        
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-        updateAvatar()
-    }
-    
-    private func exitProfile() {
-        OAuth2TokenStorage().token = nil
-        WebViewViewController.clean()
-        cleanService()
-        
-        guard let window = UIApplication.shared.windows.first else {
-            return assertionFailure("Invalid Configuration")
-        }
-        window.rootViewController = SplashViewController()
-    }
-    
-    private func showAlertExitProfile() {
+
+    func showAlertExitProfile() {
         let model = AlertModelTwoButton(
             title: "Пока, пока!",
             message: "Уверены что хотите выйти?",
@@ -71,29 +39,43 @@ final class ProfileViewController: UIViewController {
             buttonTextTwo: "Нет",
             completionOne: { [weak self] in
                 guard let self = self else { return }
-                exitProfile()
+                presenter?.exitProfile()
             },
             completionTwo: nil
         )
         alertPresenter?.showTwoButton(model)
     }
-    
-    private func cleanService() {
-        profileService.cleanProfile()
-        profileImageService.cleanProfileImageURL()
-        imagesListService.cleanImagesList()
+
+    func configure(_ presenter: ProfilePresenterProtocol) {
+        self.presenter = presenter
+        self.presenter?.view = self
     }
-    
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let imageURL = URL(string: profileImageURL)
-        else { return }
-        let processor = RoundCornerImageProcessor(cornerRadius: 61)
+}
+
+extension ProfileViewController: ProfileViewControllerProtocol {
+    func updateAvatar(imageURL: URL) {
+        let processor = RoundCornerImageProcessor(cornerRadius: 60)
         profileView.profileImageView.kf.indicatorType = .activity
         profileView.profileImageView.kf.setImage(with: imageURL,
                                     placeholder: UIImage(named: "stub"),
                                     options: [.processor(processor)])
     }
-}
 
+    func updateProfileDetails(profile: Profile?) {
+        guard let profile = profile else { return }
+        profileView.profileName?.text = profile.name
+        profileView.profileLogin?.text = profile.loginName
+        profileView.profileDescription?.text = profile.bio
+
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.presenter?.updateAvatar()
+            }
+        presenter?.updateAvatar()
+    }
+}

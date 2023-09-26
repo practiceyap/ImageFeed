@@ -2,10 +2,10 @@
 //  AlertPresenterProtocol.swift
 //  ImageFeed
 //
-//  Created by Muller Alexander on 30.08.2023.
+//  Created by Muller Alexander on 26.09.2023.
 //
 
-import UIKit
+import Foundation
 
 protocol AlertPresenterProtocol: AnyObject {
     func showSplashView(_ result: AlertModelOneButton)

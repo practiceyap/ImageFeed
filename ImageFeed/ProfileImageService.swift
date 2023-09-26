@@ -5,17 +5,23 @@
 //  Created by Muller Alexander on 31.08.2023.
 //
 
-import UIKit
+import Foundation
 
 final class ProfileImageService {
-    
     static let shared = ProfileImageService()
     private let urlSession = URLSession.shared
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
-    
-    private(set) var avatarURL: String?
+    private (set) var avatarURL: String?
     private var task: URLSessionTask?
-    
+}
+
+private extension ProfileImageService {
+    func profileImageURLRequest(username: String) -> URLRequest {
+        URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")
+    }
+}
+
+extension ProfileImageService {
     func fetchProfileImageURL(token: String, username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         guard avatarURL == nil else { return }
@@ -54,11 +60,5 @@ final class ProfileImageService {
     func cleanProfileImageURL() {
         avatarURL = nil
         task = nil
-    }
-}
-
-extension ProfileImageService {
-    func profileImageURLRequest(username: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")
     }
 }

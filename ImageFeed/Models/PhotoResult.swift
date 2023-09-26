@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct PhotoResult: Codable {
+public struct PhotoResult: Codable {
     let id: String
     let createdAt: String?
     let width: Int
@@ -17,6 +17,6 @@ struct PhotoResult: Codable {
     let urls: UrlsResult
 }
 
-struct PhotoLikeResult: Codable {
+public struct PhotoLikeResult: Codable {
     let photo: PhotoResult?
 }

@@ -5,10 +5,12 @@
 //  Created by Muller Alexander on 17.08.2023.
 //
 
-import UIKit
+import Foundation
 import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
+    
+    private let keychainWrapper = KeychainWrapper.standard
     
     private enum Keys: String {
         case token
@@ -20,14 +22,11 @@ final class OAuth2TokenStorage {
         }
         set {
             guard let newValue = newValue else {
-                KeychainWrapper.standard.removeObject(forKey: Keys.token.rawValue)
+                keychainWrapper.removeObject(forKey: Keys.token.rawValue)
                 return
             }
-            
-            let isSuccess = KeychainWrapper.standard.set(newValue, forKey: Keys.token.rawValue)
-            guard isSuccess else {
-                return
-            }
+            let isDone = keychainWrapper.set(newValue, forKey: Keys.token.rawValue)
+            guard isDone else { return }
         }
     }
 }

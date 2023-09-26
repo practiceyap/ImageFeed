@@ -5,10 +5,10 @@
 //  Created by Muller Alexander on 12.09.2023.
 //
 
-import UIKit
+import Foundation
 
 final class ImagesListService {
-    private(set) var photos: [Photo] = []
+    private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
     private var likeTask: URLSessionTask?
@@ -58,15 +58,15 @@ final class ImagesListService {
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
         
         assert(Thread.isMainThread)
-        guard task == nil else { return }
-        task?.cancel()
+        guard likeTask == nil else { return }
+        likeTask?.cancel()
         
         guard let token = token else { return }
         var requestLike: URLRequest? = isLike ? unlikeRequest(photoId: photoId) : likeRequest(photoId: photoId)
         requestLike?.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         guard let requestLike = requestLike else { return }
-        let task = urlSession.objectTask(for: requestLike) { [weak self] (result: Result<PhotoLikeResult, Error>) in
+        let likeTask = urlSession.objectTask(for: requestLike) { [weak self] (result: Result<PhotoLikeResult, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
@@ -86,16 +86,15 @@ final class ImagesListService {
                         self.photos[index] = newPhoto
                     }
                     completion(.success(likedByUser))
-                    self.task = nil
+                    self.likeTask = nil
                 case .failure(let error):
                     completion(.failure(error))
                 }
             }
         }
-        self.task = task
-        task.resume()
+        self.likeTask = likeTask
+        likeTask.resume()
     }
-    
     
     func cleanImagesList() {
         photos = []
