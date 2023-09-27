@@ -22,7 +22,6 @@ final class SplashViewController: UIViewController {
         
         if let token = oAuth2TokenStorage.token {
             fetchProfile(token: token)
-            switchToTabBarController()
         } else {
             switchToAuthViewController()
         }

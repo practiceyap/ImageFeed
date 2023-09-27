@@ -4,7 +4,7 @@ final class ImagesListViewController: UIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private var imageListServiceObserver: NSObjectProtocol?
     private var alertPresenter: AlertPresenterProtocol?
-    private var presenter: ImagesListViewPresenterProtocol?
+    internal var presenter: ImagesListViewPresenterProtocol?
     @IBOutlet private var tableView: UITableView!
     
     override func viewDidLoad() {

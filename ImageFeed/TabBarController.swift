@@ -9,6 +9,11 @@ final class TabBarController: UITabBarController {
         ) as? ImagesListViewController
         guard let imagesListViewController else { return }
         imagesListViewController.configure(ImagesListViewPresenter())
+        imagesListViewController.tabBarItem = UITabBarItem(
+            title: nil,
+            image: UIImage(named: "tab_editorial_active"),
+            selectedImage: nil
+        )
         
         view.backgroundColor = .ypBlack
         

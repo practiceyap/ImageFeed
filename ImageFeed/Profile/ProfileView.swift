@@ -40,6 +40,7 @@ final class ProfileView: UIView {
     private let logOutButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.tintColor = UIColor.ypRed
+        $0.accessibilityIdentifier = "logoutButton"
         let image = UIImage(named: "ipad.and.arrow.forward")
         $0.setImage(image, for: .normal)
         $0.addTarget(self, action: #selector(handleLogoutButton), for: .touchUpInside)
