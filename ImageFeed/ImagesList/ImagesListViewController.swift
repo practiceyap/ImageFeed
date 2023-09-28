@@ -1,21 +1,21 @@
-//
-//  ViewController.swift
-//  ImageFeed
-//
-//  Created by Muller Alexander on 13.07.2023.
-//
-
 import UIKit
 
+public enum ProjectErrors: Error {
+        case nilImageListCell
+    }
+
 final class ImagesListViewController: UIViewController {
-    
-    private let photosName: [String] = Array(0..<20).map { "\($0)" }
-    
+    private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    private var imageListServiceObserver: NSObjectProtocol?
+    private var alertPresenter: AlertPresenterProtocol?
+    internal var presenter: ImagesListViewPresenterProtocol?
     @IBOutlet private var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        presenter?.updateImagesListDetails()
+        alertPresenter = AlertPresenter(viewController: self)
     }
     
     private lazy var dateFormatter: DateFormatter = {
@@ -24,54 +24,111 @@ final class ImagesListViewController: UIViewController {
         $0.dateFormat = "d MMM yyyy"
         return $0
     }(DateFormatter())
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == showSingleImageSegueIdentifier {
+            guard let viewController = segue.destination as? SingleImageViewController,
+                  let indexPath = sender as? IndexPath else {
+                return
+            }
+            let image = presenter?.getLargeImageURL(indexPath: indexPath)
+            viewController.largeImageURL = image
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
+    func configure(_ presenter: ImagesListViewPresenterProtocol) {
+        self.presenter = presenter
+        self.presenter?.view = self
+    }
 }
+
+// MARK: - UITableViewDataSource
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        photosName.count
+        return presenter?.getPhotosCount() ?? .zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         
-        guard let imageListCell = cell as? ImagesListCell else {
+        guard let imagesListCell = cell as? ImagesListCell else {
+            print(ProjectErrors.nilImageListCell)
             return UITableViewCell()
         }
         
-        configCell(for: imageListCell, with: indexPath)
-        return imageListCell
-    }
-    
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        let imageName = photosName[indexPath.row]
+        imagesListCell.delegate = self
+        guard let presenter = presenter,
+              let photo = presenter.getPhoto(indexPath: indexPath) else {
+            return UITableViewCell()
+        }
         
-        guard let image = UIImage(named: imageName) else { return }
-        
-        cell.myCustomImageView.image = image
-        
-        let currentDate = Date()
-        
-        cell.dateLabel.text = dateFormatter.string(from: currentDate)
-        
-        let likeImageName = indexPath.row % 2 == 1 ? "Active" : "NoActive"
-        cell.likeButton.setImage(UIImage(named: likeImageName), for: .normal)
+        let configuringCellStatus = imagesListCell.configCell(photoURL: photo.thumbImageURL, with: indexPath)
+        imagesListCell.setIsLiked(isLiked: photo.isLiked)
+        if configuringCellStatus {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        return imagesListCell
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension ImagesListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        presenter?.fetchPhotosNextPage(indexPath: indexPath)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else { return 0 }
-        
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let imageWidth = image.size.width
-        let scale = imageViewWidth / imageWidth
-        let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
-        
-        return cellHeight
+        guard let presenter = presenter else { return CGFloat() }
+        return presenter.getCellHeight(indexPath: indexPath, tableView: tableView)
+    }
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        presenter?.imageListCellDidTapLike(cell, indexPath: tableView.indexPath(for: cell))
+    }
+}
+
+// MARK: - ImagesListViewControllerProtocol
+
+extension ImagesListViewController: ImagesListViewControllerProtocol {
+    func updateTableViewAnimated(oldCount: Int, newCount: Int) {
+        tableView.performBatchUpdates {
+            let indexPaths = (oldCount..<newCount).map { i in
+                IndexPath(row: i, section: 0)
+            }
+            tableView.insertRows(at: indexPaths, with: .automatic)
+        } completion: { _ in }
+    }
+    
+    func updateImagesListDetails() {
+        imageListServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.presenter?.updateTableViewAnimated()
+            }
+        presenter?.updateTableViewAnimated()
+    }
+    
+    func showError() {
+        let model = AlertModelOneButton(
+            title: "Что-то пошло не так.",
+            message: "Попробуйте ещё раз.",
+            buttonText: "Оk",
+            completion: nil
+        )
+        alertPresenter?.showOneButton(model)
     }
 }
