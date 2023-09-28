@@ -52,6 +52,8 @@ extension WebViewViewController {
     }
 }
 
+// MARK: - WKNavigationDelegate
+
 extension WebViewViewController: WKNavigationDelegate {
     func webView(
         _ webView: WKWebView,
@@ -74,6 +76,7 @@ extension WebViewViewController: WKNavigationDelegate {
     }
 }
 
+// MARK: - WebViewViewControllerProtocol
 
 extension WebViewViewController: WebViewViewControllerProtocol {
     func load(request: URLRequest) {

@@ -45,20 +45,22 @@ final class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: - ProfileViewControllerProtocol
+
 extension ProfileViewController: ProfileViewControllerProtocol {
     func updateAvatar(imageURL: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: 60)
-        profileView.profileImageView.kf.indicatorType = .activity
-        profileView.profileImageView.kf.setImage(with: imageURL,
+        profileView.getProfileImageView().kf.indicatorType = .activity
+        profileView.getProfileImageView().kf.setImage(with: imageURL,
                                     placeholder: UIImage(named: "stub"),
                                     options: [.processor(processor)])
     }
 
     func updateProfileDetails(profile: Profile?) {
         guard let profile = profile else { return }
-        profileView.profileName?.text = profile.name
-        profileView.profileLogin?.text = profile.loginName
-        profileView.profileDescription?.text = profile.bio
+        profileView.getProfileName().text = profile.name
+        profileView.getProfileLogin().text = profile.loginName
+        profileView.getProfileDescription().text = profile.bio
 
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(

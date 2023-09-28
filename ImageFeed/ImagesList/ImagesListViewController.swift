@@ -1,5 +1,9 @@
 import UIKit
 
+public enum ProjectErrors: Error {
+        case nilImageListCell
+    }
+
 final class ImagesListViewController: UIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private var imageListServiceObserver: NSObjectProtocol?
@@ -40,16 +44,18 @@ final class ImagesListViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.getPhotosCount() ?? 0
+        return presenter?.getPhotosCount() ?? .zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         
         guard let imagesListCell = cell as? ImagesListCell else {
-            print("Warning: Ошибка приведения типов")
+            print(ProjectErrors.nilImageListCell)
             return UITableViewCell()
         }
         
@@ -67,6 +73,8 @@ extension ImagesListViewController: UITableViewDataSource {
         return imagesListCell
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -88,6 +96,8 @@ extension ImagesListViewController: ImagesListCellDelegate {
         presenter?.imageListCellDidTapLike(cell, indexPath: tableView.indexPath(for: cell))
     }
 }
+
+// MARK: - ImagesListViewControllerProtocol
 
 extension ImagesListViewController: ImagesListViewControllerProtocol {
     func updateTableViewAnimated(oldCount: Int, newCount: Int) {

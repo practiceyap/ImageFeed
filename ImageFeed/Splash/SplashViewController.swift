@@ -104,6 +104,8 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
 }
 
+// MARK: - setupConstraints
+
 extension SplashViewController {
     private func setupConstraints() {
         view.addSubview(splashScreenImageView)

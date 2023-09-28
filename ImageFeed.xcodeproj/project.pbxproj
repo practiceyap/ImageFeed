@@ -29,6 +29,7 @@
 		016154C12AC45A220098182F /* ImagesListViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016154C02AC45A220098182F /* ImagesListViewControllerSpy.swift */; };
 		016154C92AC45FC30098182F /* ImageFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016154C82AC45FC30098182F /* ImageFeedUITests.swift */; };
 		016154CB2AC45FC30098182F /* ImageFeedUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016154CA2AC45FC30098182F /* ImageFeedUITestsLaunchTests.swift */; };
+		016154D22AC56C5A0098182F /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016154D12AC56C5A0098182F /* NetworkError.swift */; };
 		017178262AC30CC80096693B /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017178252AC30CC80096693B /* WebViewPresenter.swift */; };
 		017178282AC30DBA0096693B /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017178272AC30DBA0096693B /* AuthConfiguration.swift */; };
 		0171782A2AC3176C0096693B /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017178292AC3176C0096693B /* AuthHelper.swift */; };
@@ -113,6 +114,7 @@
 		016154C62AC45FC30098182F /* ImageFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		016154C82AC45FC30098182F /* ImageFeedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITests.swift; sourceTree = "<group>"; };
 		016154CA2AC45FC30098182F /* ImageFeedUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		016154D12AC56C5A0098182F /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		017178252AC30CC80096693B /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		017178272AC30DBA0096693B /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		017178292AC3176C0096693B /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				0173DCDF2AB32CC500270AEF /* Photo.swift */,
 				0173DCF02AB4A12B00270AEF /* PhotoResult.swift */,
 				017778262ABC16DD00113328 /* UrlsResult.swift */,
+				016154D12AC56C5A0098182F /* NetworkError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				0193BADD2A9F140500BBEFDB /* AlertPresenter.swift in Sources */,
 				0144487E2AB0A653004596D2 /* ImagesListService.swift in Sources */,
 				017178342AC328AF0096693B /* WebViewViewControllerDelegate.swift in Sources */,
+				016154D22AC56C5A0098182F /* NetworkError.swift in Sources */,
 				017178392AC336D70096693B /* ImagesListViewPresenter.swift in Sources */,
 				0193BAD52A9F0EB300BBEFDB /* ProfileResult.swift in Sources */,
 				01E4865D2A67B62700172FB6 /* ProfileView.swift in Sources */,
